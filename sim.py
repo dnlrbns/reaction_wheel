@@ -8,7 +8,7 @@ r = 0.05
 l = 0.1
 I_a = (1/12) * m_a * l**2
 I_d = (1/2)  * m_d * r**2
-b = 0.001
+b = 0.1
 c = 0.01
 T=0
 g=9.8
@@ -19,7 +19,7 @@ def dX_dt(t, X):
     
     return [X[2],X[3], ddth, ddph]
 
-sol = solve_ivp(dX_dt, [0,10], [-np.pi/2,0,0,0.1],max_step=0.01)
+sol = solve_ivp(dX_dt, [0,10], [0,0,0,0],max_step=0.01)
 
-plt.plot(sol.t,np.rad2deg(np.transpose(sol.y)))
+plt.plot(sol.t,np.rad2deg(np.transpose(sol.y[0:2,:]))+90)
 plt.show()
