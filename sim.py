@@ -13,13 +13,24 @@ c = 0.01
 T=0
 g=9.8
 
+def T_law():
+    return 0
 def dX_dt(t, X):
-    ddth = (b*X[3]-c*X[2]-(m_a+2*m_d)*g*l*np.cos(X[0])-T)/((m_a+4*m_d)*l**2 + I_a)
+    T =T_law()
+    
+    num=b*X[3]\
+        -c*X[2]\
+        -(m_a+2*m_d)*g*l*np.cos(X[0])\
+        -T
+    den = (m_a+4*m_d)*l**2 + I_a
+    ddth = num/den
     ddph = (T-I_d*ddth-b*X[3])/I_d
     
     return [X[2],X[3], ddth, ddph]
 
 sol = solve_ivp(dX_dt, [0,10], [0,0,0,0],max_step=0.01)
 
-plt.plot(sol.t,np.rad2deg(np.transpose(sol.y[0:2,:]))+90)
+fig = plt.figure()
+ax = plt.axes()
+ax.plot(sol.t,np.rad2deg(np.transpose(sol.y[0:2,:])))
 plt.show()
